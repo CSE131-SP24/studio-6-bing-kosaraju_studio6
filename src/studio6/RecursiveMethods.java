@@ -14,8 +14,13 @@ public class RecursiveMethods {
 	public static double geometricSum(int n) {
 		
 			// FIXME compute the geometric sum for the first n terms recursively
-			return 0;
-		
+		double total= 0.0;
+			if (n==0) {
+				return 0;
+			} else {
+				return 1/(Math.pow(2, n))+geometricSum(n-1);
+			}
+			
 	}
 
 	/**
@@ -42,10 +47,28 @@ public class RecursiveMethods {
 	 * @return an array with the same data as the input but it reverse order
 	 */
 	public static int[] toReversed(int[] array) {
+		//array to store the reversed version
+		int [] reversedarray= new int[array.length];
+		//0 to start at beginning index
+		helpermethod(array, reversedarray, 0);	
+		return reversedarray;
+			
+			
 		
-			// FIXME create a helper method that can recursively reverse the given array
-			return new int[0];
-		
+	}
+	public static int[] helpermethod (int []array, int reversedarray[], int index) {
+		//base case: stop if we are more than halfway through the array
+		if(index>reversedarray.length/2) {
+			return reversedarray;
+		} else {
+			//get the last index on the other array so we can move it to first index of reversed
+			int mirrorIndex = array.length - 1;
+			//we are switching indexes, copying values from the original to the reversed
+			reversedarray[mirrorIndex] = array[index];
+			reversedarray[index] = reversedarray[mirrorIndex];
+			return helpermethod(array, reversedarray, index + 1);
+			
+		}
 	}
 
 	/**
@@ -59,6 +82,21 @@ public class RecursiveMethods {
 	 */
 	public static void circlesUponCircles(double xCenter, double yCenter, double radius,
 			double radiusMinimumDrawingThreshold) {
+		
+		if (radius>=radiusMinimumDrawingThreshold) {
+			StdDraw.circle(xCenter, yCenter, radius);
+			double oldRadius=radius;
+			radius=oldRadius/3.0;
+			circlesUponCircles(xCenter, yCenter+oldRadius, radius,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter-oldRadius, yCenter, radius,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter, yCenter-oldRadius, radius,radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter+oldRadius, yCenter, radius,radiusMinimumDrawingThreshold);
+			return;
+			
+			
+		}
+		
+		
 		
 		// FIXME
 	}
